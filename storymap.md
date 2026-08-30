@@ -1,9 +1,7 @@
-# From Source to Sea: the river that carried a border
+# The river that carried a border
 
-*RGS Young Geographer of the Year 2026 - Key Stage 5 - StoryMap content*
+*A plain-language account of the analysis in this repository.*
 
-Paste each section below into a corresponding ArcGIS StoryMaps block.
-Images referenced are in this repository.
 
 ## The river that carried a border
 

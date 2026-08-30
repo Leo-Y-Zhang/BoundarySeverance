@@ -83,14 +83,13 @@ independent ground truth, and the pipeline halts if a check fails.
 | `facts.py` | recomputes every descriptive number into `facts.json` |
 | `make_paper.py` | injects all values into the manuscript and builds it |
 
-## StoryMap
+## Plain-language version
 
-`make_storymap.py` generates a public-facing version of the same work for the
-Royal Geographical Society's Young Geographer of the Year (Key Stage 5), whose
-2026 theme is *From Source to Sea* and whose brief lists conflict among the
-river themes. It writes `storymap.html`, a readable preview, and `storymap.md`,
-the section-by-section text for pasting into ArcGIS StoryMaps. Its figures are
-injected from the same result files as the paper.
+`make_storymap.py` generates a non-technical retelling of the same analysis —
+`storymap.html` to read in a browser, `storymap.md` as plain text. Its figures
+come from the same result files as the paper, so it cannot claim a number the
+analysis does not support. It is a general-audience explainer, not a
+competition entry.
 
 ## A note on the numbers
 

@@ -1,14 +1,11 @@
-"""Generate the RGS Young Geographer StoryMap content from the result files.
+"""Generate a plain-language retelling of the analysis from the result files.
 
-The Royal Geographical Society's KS5 category asks for an Esri StoryMap on the
-theme "From Source to Sea", explicitly including conflict among the river
-themes. This writes the section-by-section narrative and a self-contained HTML
-preview, with every figure injected from the analysis rather than typed, so the
-entry cannot drift from the paper it is based on.
+Every figure is injected from the same JSON the paper is built from, so this
+cannot state a number the analysis does not support.
 
 Output:
-  storymap.html  - readable preview, open in any browser
-  storymap.md    - plain text to paste into ArcGIS StoryMaps section by section
+  storymap.html  - readable explainer, open in any browser
+  storymap.md    - the same text in plain markdown
 """
 import json
 import sys
@@ -179,12 +176,10 @@ CAPTIONS = {
 }
 
 # ---------------- markdown, for pasting into ArcGIS ----------------
-md = ["# From Source to Sea: the river that carried a border",
+md = ["# The river that carried a border",
       "",
-      "*RGS Young Geographer of the Year 2026 - Key Stage 5 - StoryMap content*",
-      "",
-      "Paste each section below into a corresponding ArcGIS StoryMaps block.",
-      "Images referenced are in this repository.", ""]
+      "*A plain-language account of the analysis in this repository.*",
+      "", ""]
 for i, (title, body) in enumerate(SECTIONS):
     md.append(f"## {title}\n")
     md.append(body.strip() + "\n")
