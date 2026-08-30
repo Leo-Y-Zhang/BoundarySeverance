@@ -130,6 +130,46 @@ def fig_nulls():
     print(f"wrote fig2_nulls.png ({len(panels)} panels)")
 
 
+def fig_finenull():
+    """The 71-placement null, drawn from the actual per-placement values."""
+    f = load("results_finenull.json")
+    if not f or "none" not in f.get("controls", {}):
+        print("skipping fig3: results_finenull.json not ready")
+        return
+    c = f["controls"]["none"]
+    p = np.array(c["placebos"])
+
+    fig, (ax, ax2) = plt.subplots(
+        2, 1, figsize=(6.2, 3.9), sharex=True,
+        gridspec_kw={"height_ratios": [2.1, 1.0], "hspace": 0.12})
+
+    ax.hist(p, bins=18, color=MUTED, alpha=0.55, edgecolor="white", linewidth=0.6)
+    ax.axvline(c["true"], color=ACCENT, lw=1.9, zorder=5)
+    ax.text(c["true"], ax.get_ylim()[1] * 0.94,
+            f"  true {c['true']:.4f}", color=ACCENT, fontsize=8.5,
+            va="top", ha="left")
+    ax.set_ylabel("placements")
+    ax.set_title(f"All {c['n_placebo']} rotated placements versus the true position "
+                 f"(p = {c['p_emp']:.4f})", fontsize=9, loc="left")
+
+    ax2.scatter(p, np.zeros_like(p), s=15, color=MUTED, alpha=0.75,
+                edgecolor="none", zorder=2, label="placebo placements")
+    ax2.axvline(c["true"], color=ACCENT, lw=1.9, zorder=5, label="true placement")
+    ax2.annotate("", xy=(c["true"], -0.22), xytext=(max(p), -0.22),
+                 arrowprops=dict(arrowstyle="<->", color=INK, lw=0.8))
+    ax2.text((c["true"] + max(p)) / 2, -0.34,
+             f"no placement reaches it\n(max {max(p):.4f})",
+             fontsize=7, ha="center", va="top", color=INK)
+    ax2.set_yticks([]); ax2.set_ylim(-0.62, 0.30)
+    ax2.set_xlabel("severance ratio  (median circuity crossing / same side)")
+    ax2.legend(fontsize=7, frameon=False, loc="upper left", ncol=2)
+    fig.tight_layout()
+    fig.savefig("fig3_finenull.png")
+    print(f"wrote fig3_finenull.png ({c['n_placebo']} placements, "
+          f"max {max(p):.4f} vs true {c['true']:.4f})")
+
+
 if __name__ == "__main__":
     fig_nulls()
+    fig_finenull()
     fig_map()

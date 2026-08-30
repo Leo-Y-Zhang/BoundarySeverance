@@ -151,6 +151,18 @@ V["ham_min"] = f"{min(ham):.4f}"
 V["ham_max"] = f"{max(ham):.4f}"
 V["ham_above"] = sum(1 for h in ham if h > 1.05)
 
+# ---- finer permutation null (71 placements) ---------------------------
+fn = load("results_finenull.json")["controls"]["none"]
+fnp = np.array(fn["placebos"])
+V["fn_n"] = fn["n_placebo"]
+V["fn_n_plus"] = fn["n_placebo"] + 1
+V["fn_true"] = f"{fn['true']:.4f}"
+V["fn_min"] = f"{fnp.min():.4f}"
+V["fn_max"] = f"{fnp.max():.4f}"
+V["fn_p"] = f"{fn['p_emp']:.4f}"
+V["fn_z"] = f"{fn['z']:+.2f}"
+V["fn_exceed"] = fn["exceed"]
+
 # ---- derived comparisons ----------------------------------------------
 V["be_nplacebo_plus"] = n["n_placebo"] + 1
 V["severity_ratio"] = f"{(ncy['true'] - 1) / (n['true'] - 1):.0f}"

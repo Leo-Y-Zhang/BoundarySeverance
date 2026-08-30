@@ -34,7 +34,8 @@ At the United Nations Buffer Zone in Nicosia, still closed today, crossing costs
 (<<cy_exceed>>/<<cy_nplacebo>> displaced placebos exceed it, $z = <<cy_z>>$).
 At the former inner Berlin Wall, removed in 1989, crossing still costs
 <<be_pct>>\,\%, and in every one of four barrier specifications not one of
-<<be_nplacebo>> rotated placebos reaches the true placement. The effect is small
+<<be_nplacebo>> rotated placebos reaches the true placement; at a finer spacing
+none of <<fn_n>> placements does either ($p = <<fn_p>>$). The effect is small
 but persistent: it holds across <<sens_n>> sampling specifications
 (<<sens_min>> to <<sens_max>>, every cluster interval excluding 1), and it
 \emph{strengthens} rather than weakens when trips crossing water and rail are
@@ -335,6 +336,18 @@ it isolates trips whose only obstacle is the former boundary, and there the Wall
 costs about <<c_nwr_pct>>\,\%. Where a river must be crossed anyway, the river
 dominates and the Wall adds little.
 
+\paragraph{A finer null.} With <<be_nplacebo>> placements the smallest
+attainable $p$-value is $1/<<be_nplacebo_plus>>$, which the headline
+specification attained exactly --- the test could show the true placement was
+extremal but not how extremal. Repeating it at <<fn_n>> placements, one every
+$5^{\circ}$, drops the floor to $1/<<fn_n_plus>>$. The result
+(Figure~\ref{fig:finenull}) is unchanged in estimate and sharper in inference:
+the null spans <<fn_min>> to <<fn_max>>, and the highest of all <<fn_n>>
+alternative placements, <<fn_max>>, still falls below the true value of
+<<fn_true>>. No rotation of the Wall's own shape, anywhere in Berlin, severs
+the city as much as the position it actually occupied. This gives
+$p = <<fn_p>>$.
+
 \paragraph{The estimate is stable.} Every threshold in Section~\ref{sec:stat} is
 arbitrary within reason. Varying each singly (Table~\ref{tab:sens}) moves the
 estimate only between <<sens_min>> and <<sens_max>>, and every cluster interval
@@ -352,6 +365,16 @@ $<<be_seed_mean>> \pm <<be_seed_sd>>$, so the estimate is stable once the sample
 is adequate; at 150 origins it was not, swinging by more than the size of the
 effect in both directions, which is a caution worth recording for anyone
 reusing this design.
+
+\begin{figure}[t]
+\centering
+\includegraphics[width=0.94\linewidth]{fig3_finenull.png}
+\caption{The headline specification against a finer null of <<fn_n>> rotated
+placements at $5^{\circ}$ intervals. Above, the distribution of placebo
+severance ratios; below, the individual placements. The true position of the
+Wall lies beyond every one of them.}
+\label{fig:finenull}
+\end{figure}
 
 \begin{table}[t]
 \centering
@@ -455,12 +478,14 @@ segment measures <<inner_km>>\,km against a historical 43\,km. Errors of tens of
 metres are immaterial at our trip lengths; systematic detours are not, and a
 study of the exact 1989 cadastral line might differ.
 
-\textbf{The null is finite.} With <<be_nplacebo>> placements the smallest
-attainable $p$-value is $1/<<be_nplacebo_plus>> \approx <<be_p>>$, and every
-Berlin specification attains exactly that floor. The design can therefore show
-the true placement is extremal, but cannot express how extremal; the $z$ scores,
-which are not floored, carry that information instead. A study wanting finer
-resolution needs more placements, and there is no obstacle to running them.
+\textbf{The null is finite.} A permutation null of $n$ placements cannot report
+a $p$-value below $1/(n+1)$. At <<be_nplacebo>> placements every Berlin
+specification attained that floor exactly. Extending the headline specification
+to <<fn_n>> placements lowered the floor to <<fn_p>>, which it again attained,
+so the constraint has been relaxed rather than removed. The remaining three
+specifications are still reported at <<be_nplacebo>> placements and remain
+floored; their $z$ scores, which are not floored, carry the finer information.
+Extending them is a matter of compute only.
 
 \textbf{Rotations are not perfectly exchangeable.} A rotated ring samples
 different parts of the city, and Berlin's built form is not isotropic. The
@@ -477,12 +502,22 @@ data we do not have.
 \subsection{Further work}
 
 The natural next step is comparative. The apparatus is boundary-agnostic --- it
-needs a curve, a road network and a null --- so the same instrument can be run
-across Belfast's peace lines, internal apartheid-era buffer strips, the
-ceasefire line in Kashmir and motorway severance in postwar American cities, and
-asked whether severance sorts by boundary type, by age, or by whether the
-boundary is still enforced. Our two points hint at such a curve; a dozen would
-begin to define one. A second direction is temporal: OSM history would in
+needs a curve, a road network and a null --- so the same instrument could be run
+across internal apartheid-era buffer strips, the ceasefire line in Kashmir and
+motorway severance in postwar American cities, and asked whether severance sorts
+by boundary type, by age, or by whether the boundary is still enforced. Our two
+points hint at such a curve; a dozen would begin to define one.
+
+The binding constraint is boundary geometry, not method. We attempted Belfast,
+which would have been the informative middle case, since many peace lines still
+stand and some have gates closed nightly. It could not be done: of roughly 1,300
+ways tagged as walls within the Belfast bounding box, exactly one carries a tag
+identifying it as a peace line. The barriers are physically present and
+politically documented, but they are not distinguishable in the map data, so the
+geometry would have to be digitised from the Northern Ireland barrier register
+before this method could touch them. Anyone extending this work should budget
+for boundary digitisation rather than assuming, as we initially did, that a
+mapped wall is a findable wall. A second direction is temporal: OSM history would in
 principle allow the Berlin measurement to be repeated for 2010 and 2020, turning
 two endpoints into a healing trajectory.
 

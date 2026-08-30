@@ -18,15 +18,22 @@ today. Crossing it costs about 46% additional network distance, and none of 20
 displaced placebos comes near it (z ≈ +11). The method detects a live boundary
 comfortably.
 
-**The former inner Berlin Wall**, removed in 1989. The uncontrolled measurement
-returns roughly +1%, which looks positive until you ask what else lies along
-that line. Around 90% of trips crossing the inner Wall also cross water, and 99%
-cross water or rail, because the Wall was routed along the Spree, the canals and
-existing rail corridors. Controlling for those, the evidence collapses.
+**The former inner Berlin Wall**, removed in 1989. Crossing it still costs about
+1% more distance, and across 71 rotated placements of the same curve — every
+5° around the city — not one severs Berlin as much as the position the Wall
+actually occupied (p = 0.014).
 
-The conclusion is a carefully qualified null: thirty-seven years on, no residue
-of the Wall survives in Berlin's drivable road network that can be distinguished
-from the physical geography it was built along.
+The interesting part is the confound. Around 90% of trips crossing the inner
+Wall also cross water, because the Wall was routed along the Spree and the
+canals, so the obvious worry is that the river is doing the work. It is not:
+removing water and rail crossings *raises* the effect to about 4%. Berlin is a
+watery city, so the same-side comparison trips cross rivers too (71% of them). A
+confound shared by both groups is not a rival explanation — it is attenuation,
+and it was hiding the boundary rather than creating it.
+
+Thirty-seven years on, a faint but measurable trace of the Wall survives in
+Berlin's road network, roughly one part in fifty of the cost of a boundary that
+is still shut.
 
 ## Running it
 
