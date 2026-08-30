@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Cluster-bootstrap interval for the Nicosia positive control."""
 import json
 import sys
@@ -7,7 +8,7 @@ import numpy as np
 import cyprus as CY
 from fetch import CITIES
 from graph import load
-from severance import measure, bootstrap_ci, cluster_bootstrap_ci
+from severance import bootstrap_ci, cluster_bootstrap_ci, measure
 
 sys.stdout.reconfigure(encoding="utf-8")
 

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Hold the confound constant instead of removing it.
 
 Restricting to pairs that ALL cross water, we ask whether crossing the former
@@ -14,7 +15,7 @@ import barriers as B
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, bootstrap_ci
+from severance import bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

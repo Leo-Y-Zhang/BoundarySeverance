@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Is the Berlin result an artefact of the sampling parameters?
 
 Every design choice here is arbitrary within reason: how close a pair's midpoint

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Unit tests for the geometric primitives the whole analysis rests on.
 
 These run offline in seconds. The integration check that needs live data is
@@ -13,11 +14,11 @@ import numpy as np
 
 sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 
-from osm import haversine, local_xy, seg_intersect          # noqa: E402
-from wall import chain, point_in_ring, ring_area_km2        # noqa: E402
-from severance import rotate, parity_inside                 # noqa: E402
-from barriers import Grid                                   # noqa: E402
-from cyprus import close_ring                               # noqa: E402
+from barriers import Grid  # noqa: E402
+from cyprus import close_ring  # noqa: E402
+from osm import haversine, local_xy, seg_intersect  # noqa: E402
+from severance import parity_inside, rotate  # noqa: E402
+from wall import chain, point_in_ring, ring_area_km2  # noqa: E402
 
 
 class TestHaversine(unittest.TestCase):

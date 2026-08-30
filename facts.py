@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Recompute every descriptive number the paper quotes, into facts.json.
 
 Nothing in the manuscript is typed by hand; the LaTeX is rendered from this file
@@ -6,17 +7,16 @@ plus the experiment result files, so the text cannot drift from the analysis.
 import json
 import sys
 
-import numpy as np
 from scipy.sparse.csgraph import connected_components
 
 import barriers as B
 import cyprus as CY
+import validate_wall as VW
 from fetch import CITIES
 from graph import load, project
 from osm import haversine, local_xy
-from segments import classify, city_boundary_points
+from segments import city_boundary_points, classify
 from wall import build_ring, load_members, point_in_ring, ring_area_km2
-import validate_wall as VW
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -74,8 +74,9 @@ for city in ("berlin", "hamburg", "nicosia"):
         lat_b, lon_b, g_b = lat, lon, g
 
 # raw (pre-giant-component) counts for Berlin, for the methods section
-from osm import overpass
 from fetch import DRIVE
+from osm import overpass
+
 rb = CITIES["berlin"]["route_bbox"]
 raw = overpass(f"""
     [out:json][timeout:900];

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Where along the inner Wall is the residual severance concentrated?"""
 import json
 import sys
@@ -7,7 +8,7 @@ from scipy.spatial import cKDTree
 
 from fetch import CITIES
 from graph import load, project
-from osm import overpass, haversine
+from osm import haversine, overpass
 from segments import classify
 from severance import measure
 from wall import build_ring

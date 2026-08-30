@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Overpass client with on-disk caching, plus geometry helpers.
 
 Deliberately stdlib-only apart from numpy so the pipeline is reproducible
@@ -27,7 +28,7 @@ def overpass(query, tag=""):
     key = hashlib.sha256(query.encode()).hexdigest()[:16]
     path = os.path.join(CACHE, f"{tag}_{key}.json" if tag else f"{key}.json")
     if os.path.exists(path):
-        with open(path, "r", encoding="utf-8") as fh:
+        with open(path, encoding="utf-8") as fh:
             return json.load(fh)
 
     last = None

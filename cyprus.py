@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Positive control: the UN Buffer Zone at Nicosia, a boundary still closed today.
 
 The divide is a line, not a loop, so we close it into a ring by running the
@@ -10,8 +11,8 @@ import sys
 
 import numpy as np
 
-from osm import overpass, haversine
 from graph import project
+from osm import haversine, overpass
 
 sys.stdout.reconfigure(encoding="utf-8")
 

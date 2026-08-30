@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Summarise the true-vs-placebo comparison from results.json."""
 import json
 import sys
+
 import numpy as np
 
 sys.stdout.reconfigure(encoding="utf-8")

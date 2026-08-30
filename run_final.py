@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Definitive run: large source sample, cluster bootstrap, seed-stability check."""
 import json
 import sys
@@ -9,7 +10,7 @@ import cyprus as CY
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, bootstrap_ci, cluster_bootstrap_ci
+from severance import bootstrap_ci, cluster_bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

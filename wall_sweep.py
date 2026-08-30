@@ -1,7 +1,9 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Find the role-filter / tolerance combination that yields a clean closed ring."""
 import sys
-from wall import load_members, chain, ring_length_km
+
 from osm import haversine
+from wall import chain, load_members, ring_length_km
 
 sys.stdout.reconfigure(encoding="utf-8")
 

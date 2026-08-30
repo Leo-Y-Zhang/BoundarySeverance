@@ -1,7 +1,7 @@
 cache/
 __pycache__/
 *.pyc
-*.log
-paper.aux
-paper.log
-paper.out
+*.egg-info/
+build/
+dist/
+.ruff_cache/

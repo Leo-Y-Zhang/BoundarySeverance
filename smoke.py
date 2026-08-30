@@ -1,10 +1,12 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Quick single-run check on the true Wall line before committing to the full suite."""
-import sys, time
-import numpy as np
-from graph import load
+import sys
+import time
+
 from fetch import CITIES
+from graph import load
+from severance import bootstrap_ci, measure
 from wall import build_ring
-from severance import measure, bootstrap_ci
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -22,7 +24,7 @@ if res is None:
     sys.exit(1)
 
 lo, hi = bootstrap_ci(res)
-print(f"\nBERLIN, true Wall line")
+print("\nBERLIN, true Wall line")
 print(f"  pairs: {res['n_cross']} crossing / {res['n_same']} same-side")
 print(f"  median circuity crossing : {res['med_cross']:.4f}")
 print(f"  median circuity same-side: {res['med_same']:.4f}")

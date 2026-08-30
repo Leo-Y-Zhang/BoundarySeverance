@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Find out what Berlin Wall geometry actually exists in OSM before relying on it."""
 import collections
+
 from osm import overpass
 
 BBOX = "52.33,13.08,52.70,13.77"

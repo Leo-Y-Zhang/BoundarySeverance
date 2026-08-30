@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """A finer permutation null: 71 placements at 5 degrees instead of 23 at 15.
 
 With 23 placements the smallest attainable p-value is 1/24 = 0.042, which every
@@ -16,7 +17,7 @@ import barriers as B
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, cluster_bootstrap_ci
+from severance import cluster_bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

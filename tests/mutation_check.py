@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Prove the unit tests actually fail when the code is wrong.
 
 A suite that has never been observed failing is decoration. This applies a
@@ -106,7 +107,7 @@ def main():
         if base != 0:
             print("BASELINE SUITE IS ALREADY FAILING - fix that first")
             return 1
-        print(f"baseline: suite passes\n")
+        print("baseline: suite passes\n")
 
         survived = []
         for i, (fname, find, repl, desc) in enumerate(MUTATIONS, 1):

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Full experiment. Writes results.json incrementally so progress is inspectable."""
 import json
 import sys
@@ -8,7 +9,7 @@ import numpy as np
 from fetch import CITIES
 from graph import load, project
 from segments import classify
-from severance import measure, bootstrap_ci
+from severance import bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

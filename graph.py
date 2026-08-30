@@ -1,11 +1,13 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Build a routable undirected road graph from the cached Overpass extract."""
 import sys
+
 import numpy as np
 from scipy.sparse import csr_matrix
 from scipy.sparse.csgraph import connected_components
 
-from osm import overpass, haversine, local_xy
 from fetch import CITIES, DRIVE
+from osm import haversine, overpass
 
 sys.stdout.reconfigure(encoding="utf-8")
 

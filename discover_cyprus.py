@@ -1,10 +1,10 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Find usable geometry for the UN Buffer Zone in Cyprus - the positive control.
 
 Berlin's boundary was removed in 1989. If the method finds nothing there, that
 could mean the Wall left no trace, or that the method cannot detect anything.
 A boundary that is still closed today distinguishes those two possibilities.
 """
-import collections
 import sys
 
 from osm import overpass

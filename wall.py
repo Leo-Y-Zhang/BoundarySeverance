@@ -1,6 +1,8 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Assemble the Mauerweg member ways into a closed ring enclosing West Berlin."""
 import sys
-from osm import overpass, haversine, local_xy
+
+from osm import haversine, local_xy, overpass
 
 sys.stdout.reconfigure(encoding="utf-8")
 

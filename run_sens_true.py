@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Point-estimate stability across sampling parameters, at the main sample size.
 
 Recomputing a full 23-placement null for every specification is expensive. Here
@@ -14,7 +15,7 @@ import numpy as np
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, cluster_bootstrap_ci
+from severance import cluster_bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

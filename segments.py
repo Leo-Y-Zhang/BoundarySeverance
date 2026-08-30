@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Split the Wall ring into its two politically distinct halves.
 
 The 158 km loop is not one boundary. Roughly 43 km divided East from West
@@ -7,11 +8,12 @@ first is the inner-German urban division. We separate them exactly, by distance
 to Berlin's present administrative boundary.
 """
 import sys
+
 import numpy as np
 from scipy.spatial import cKDTree
 
-from osm import overpass
 from graph import project
+from osm import overpass
 
 sys.stdout.reconfigure(encoding="utf-8")
 
@@ -66,7 +68,7 @@ def classify(ring, lat0, lon0, verbose=True, tol=CITY_LIMIT_TOL):
 
 
 if __name__ == "__main__":
-    from wall import build_ring
     from fetch import CITIES
+    from wall import build_ring
     bbox = CITIES["berlin"]["study_bbox"]
     classify(build_ring(), (bbox[0] + bbox[2]) / 2, (bbox[1] + bbox[3]) / 2)

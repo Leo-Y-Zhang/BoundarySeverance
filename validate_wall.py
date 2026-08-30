@@ -1,8 +1,10 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Validate the assembled ring against ground truth before anything is built on it.
 
 If this file does not print ALL PASS, no downstream result is trustworthy.
 """
 import sys
+
 from osm import local_xy
 from wall import build_ring, point_in_ring, ring_area_km2
 

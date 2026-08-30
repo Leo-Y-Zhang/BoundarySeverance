@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Re-run Berlin inner Wall with physical-barrier controls, true vs placebos."""
 import json
 import sys
@@ -9,7 +10,7 @@ import barriers as B
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, bootstrap_ci
+from severance import bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)

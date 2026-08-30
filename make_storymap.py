@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Generate a plain-language retelling of the analysis from the result files.
 
 Every figure is injected from the same JSON the paper is built from, so this
@@ -60,7 +61,7 @@ V = {
 
 SECTIONS = [
     ("The river that carried a border",
-     f"""The Spree rises in the hills of Saxony and runs north-west through
+     """The Spree rises in the hills of Saxony and runs north-west through
 Berlin before joining the Havel and, eventually, the North Sea. For twenty-eight
 years, part of its course through the centre of Berlin was also the edge of a
 country. The Berlin Wall did not cut across the city at random. Where it could,
@@ -151,7 +152,7 @@ was not. Where Berlin rebuilt across the river, the border disappeared from the
 road network. Where it did not, a trace remains."""),
 
     ("What follows the water",
-     f"""Rivers give cities their shape, and then politics borrows that shape
+     """Rivers give cities their shape, and then politics borrows that shape
 and calls it a border. Long after the politics is dismantled, the river is still
 there, and so is the pattern of bridges it dictated.
 

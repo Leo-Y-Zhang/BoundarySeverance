@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Is there usable peace-line geometry in OSM for Belfast?
 
 Belfast is the interesting middle case: many peace lines still stand, some have

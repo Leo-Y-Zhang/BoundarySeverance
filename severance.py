@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Measure circuity severance across a boundary ring, with rotation placebos.
 
 Design
@@ -18,14 +19,13 @@ about its own centroid. Shape, length and enclosed area are preserved; only the
 placement changes. A real boundary effect must stand outside that distribution.
 """
 import sys
+
 import numpy as np
+from scipy import stats
 from scipy.sparse.csgraph import dijkstra
 from scipy.spatial import cKDTree
-from scipy import stats
 
-from graph import load, project
-from fetch import CITIES
-from wall import build_ring
+from graph import project
 
 sys.stdout.reconfigure(encoding="utf-8")
 

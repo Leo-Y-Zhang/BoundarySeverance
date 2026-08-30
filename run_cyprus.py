@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Positive control at Nicosia: does the method detect a boundary that is still closed?
 
 Placebos are perpendicular displacements of the same divide line, from 2 to 12 km
@@ -14,7 +15,7 @@ from scipy.sparse.csgraph import connected_components
 import cyprus as CY
 from fetch import CITIES
 from graph import load
-from severance import measure, bootstrap_ci
+from severance import bootstrap_ci, measure
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
 

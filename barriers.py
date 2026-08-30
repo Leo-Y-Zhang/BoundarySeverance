@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Physical-barrier control: water and rail.
 
 The inner Wall was routed along the Spree, the Landwehrkanal and several rail
@@ -6,10 +7,11 @@ water and rail onto a grid so pairs whose straight line crosses one can be
 dropped, leaving only severance that water and rail cannot explain.
 """
 import sys
+
 import numpy as np
 
-from osm import overpass
 from graph import project
+from osm import overpass
 
 sys.stdout.reconfigure(encoding="utf-8")
 

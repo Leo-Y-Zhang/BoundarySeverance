@@ -1,5 +1,9 @@
 # Boundary severance in road networks
 
+[![CI](https://github.com/Leo-Y-Zhang/BoundarySeverance/actions/workflows/ci.yml/badge.svg)](https://github.com/Leo-Y-Zhang/BoundarySeverance/actions/workflows/ci.yml)
+![python](https://img.shields.io/badge/python-3.11%2B-blue)
+![licence](https://img.shields.io/badge/licence-proprietary%20source--available-lightgrey)
+
 A method for asking whether a political boundary bends a city's road network,
 and whether that bend is the boundary's doing or the river it was drawn along.
 

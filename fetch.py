@@ -1,5 +1,7 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Fetch the two inputs: the Wall trace and the drivable road network."""
 import sys
+
 from osm import overpass
 
 sys.stdout.reconfigure(encoding="utf-8")

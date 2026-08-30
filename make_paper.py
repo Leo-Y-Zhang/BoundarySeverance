@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Render paper_template.tex into paper.tex with every number injected, then build.
 
 Fails loudly if any placeholder is left unfilled, so the manuscript cannot ship

@@ -1,3 +1,4 @@
+# SPDX-License-Identifier: LicenseRef-Leo-Y-Zhang-Proprietary
 """Every Berlin specification at one common sample size, so rows are comparable.
 
 The earlier runs used 150-900 origins depending on the experiment, which makes
@@ -15,7 +16,7 @@ import barriers as B
 from fetch import CITIES
 from graph import load
 from segments import classify
-from severance import measure, cluster_bootstrap_ci
+from severance import cluster_bootstrap_ci, measure
 from wall import build_ring
 
 sys.stdout.reconfigure(encoding="utf-8", line_buffering=True)
