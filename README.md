@@ -35,6 +35,25 @@ Thirty-seven years on, a faint but measurable trace of the Wall survives in
 Berlin's road network, roughly one part in fifty of the cost of a boundary that
 is still shut.
 
+## Tests
+
+```
+python -m unittest discover -s tests -v   # 41 unit tests, offline, ~0.01 s
+python tests/mutation_check.py            # breaks the geometry on purpose
+```
+
+The mutation check exists because a suite that has never been observed failing
+is decoration. It applies eleven single-line mutations to the geometric
+primitives and fails if the tests do not notice. Two of the eleven are labelled
+equivalent and are expected to survive, with the reason recorded: for a closed
+ring, crossing-parity to the left equals parity to the right, and the
+horizontal-edge skip is a fast path already handled downstream.
+
+It also purges `__pycache__` before every run. Without that, a mutation such as
+`^=` to `|=` changes neither file size nor mtime-in-seconds, so CPython reuses
+stale bytecode, the mutation never runs, and the harness reports it as survived.
+That was observed here, not hypothesised.
+
 ## Running it
 
 Requires Python 3 with `numpy` and `scipy`. Nothing else — no geospatial stack.
