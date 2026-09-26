@@ -16,9 +16,10 @@ break the code on purpose first and confirm the test notices. Several bugs in
 this repository were caught exactly that way, and at least one was a bug in the
 checking harness rather than in the code it was checking.
 
-**Numbers in the README are generated, never typed.** They are injected from
-the result files by `make_readme.py`, which fails if a value is missing. If you
-change an analysis, regenerate rather than editing the prose to match.
+**Numbers in the paper are generated, never typed.** They are injected from
+the result files by `make_paper.py`, which fails if a placeholder is left
+unfilled. If you change an analysis, regenerate rather than editing the prose
+to match.
 
 **Report what the data says.** If a control moves a result the wrong way, that
 is the finding. Do not quietly pick the specification that flatters the
