@@ -42,13 +42,13 @@ is still shut.
 ## Tests
 
 ```
-python -m unittest discover -s tests -v   # 41 unit tests, offline, ~0.01 s
+python -m unittest discover -s tests -v   # 43 unit tests, offline, ~0.1 s
 python tests/mutation_check.py            # breaks the geometry on purpose
 ```
 
 The mutation check exists because a suite that has never been observed failing
-is decoration. It applies eleven single-line mutations to the geometric
-primitives and fails if the tests do not notice. Two of the eleven are labelled
+is decoration. It applies thirteen single-line mutations to the geometric
+primitives and fails if the tests do not notice. Two of the thirteen are labelled
 equivalent and are expected to survive, with the reason recorded: for a closed
 ring, crossing-parity to the left equals parity to the right, and the
 horizontal-edge skip is a fast path already handled downstream.

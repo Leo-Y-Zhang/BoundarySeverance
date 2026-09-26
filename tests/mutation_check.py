@@ -68,6 +68,14 @@ MUTATIONS = [
      "ends.setdefault(a, []).append((i, \"head\"))",
      "ends.setdefault(a, []).append((i, \"tail\"))",
      "chain: mislabel a head as a tail"),
+    ("severance.py",
+     "    keep[-1] = True\n",
+     "",
+     "thin_ring: let the stride drop the vertex that closes the ring"),
+    ("severance.py",
+     "    keep[:-1] |= long_edge\n    keep[1:] |= long_edge\n",
+     "",
+     "thin_ring: drop far closure corners, leaving a chord through the city"),
 ]
 
 

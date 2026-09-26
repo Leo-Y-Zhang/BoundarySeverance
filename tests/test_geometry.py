@@ -17,7 +17,7 @@ sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.abspath(__file__))))
 from barriers import Grid  # noqa: E402
 from cyprus import close_ring  # noqa: E402
 from osm import haversine, local_xy, seg_intersect  # noqa: E402
-from severance import parity_inside, rotate  # noqa: E402
+from severance import measure, parity_inside, rotate  # noqa: E402
 from wall import chain, point_in_ring, ring_area_km2  # noqa: E402
 
 
@@ -360,6 +360,90 @@ class TestCloseRing(unittest.TestCase):
         ring = close_ring(line)
         for p in line:
             self.assertIn(p, ring)
+
+
+def _synthetic_city(lat0, lon0, half=2000.0, step=100.0):
+    """A square lattice of roads around (lat0, lon0), in lat/lon, with its graph."""
+    from scipy.sparse import coo_matrix
+
+    ticks = np.arange(-half, half + step / 2, step)
+    gx, gy = np.meshgrid(ticks, ticks)
+    x, y = gx.ravel(), gy.ravel()
+    lat = lat0 + np.degrees(y / 6371008.8)
+    lon = lon0 + np.degrees(x / (6371008.8 * math.cos(math.radians(lat0))))
+    k = len(ticks)
+    rows, cols = [], []
+    for i in range(k):
+        for j in range(k):
+            a = i * k + j
+            if j + 1 < k:
+                rows.append(a); cols.append(a + 1)
+            if i + 1 < k:
+                rows.append(a); cols.append(a + k)
+    w = np.full(len(rows), step)
+    g = coo_matrix((w, (rows, cols)), shape=(len(x), len(x))).tocsr()
+    return lat, lon, g + g.T, y
+
+
+class TestMeasureSides(unittest.TestCase):
+    """measure() must put every node on the side the full ring says it is on.
+
+    It thins the ring before the parity test for speed. That thinning must not
+    drop the vertex that closes the ring, nor the far corners that close an
+    open line into a ring (cyprus.close_ring): losing them replaces the
+    closure with a chord, and the chord can cut straight through the city.
+    """
+
+    def test_open_line_closed_into_a_ring(self):
+        lat0, lon0 = 35.17, 33.37
+        lat, lon, g, y = _synthetic_city(lat0, lon0)
+        # an east-west divide through the middle of the city, ~30 m vertex
+        # spacing; 2001 points, so a stride-3 thinning lands on the corners
+        xs = np.arange(-30000.0, 30000.0 + 1, 30.0)
+        self.assertEqual(len(xs) % 3, 0)
+        line = [(lat0, lon0 + math.degrees(x / (6371008.8 * math.cos(math.radians(lat0)))))
+                for x in xs]
+        ring = close_ring(line)
+        band = np.array([True] * len(line) + [False] * (len(ring) - len(line)))
+        bbox = (lat.min(), lon.min(), lat.max(), lon.max())
+        res = measure(lat, lon, g, ring, bbox, lat0, lon0, n_sources=60, seed=0,
+                      band_mask=band, band=1000.0, dmin=300.0, dmax=1500.0,
+                      exclude=50.0)
+        self.assertIsNotNone(res, "no crossing pairs: the sides were lost")
+        north = y > 0
+        want = north[res["src"]] != north[res["dst"]]
+        np.testing.assert_array_equal(res["cross"], want)
+
+    def test_closed_ring_keeps_its_closing_edge(self):
+        """A closed ring whose length is not 1 + a multiple of the stride: the
+        closing edge must survive thinning, or every node in a strip level
+        with it, all the way across the city, is put on the wrong side."""
+        lat0, lon0 = 52.5, 13.4
+        lat, lon, g, y = _synthetic_city(lat0, lon0)
+        # rectangle: north edge along y = 0 through the city, the rest far
+        # south; it starts and ends on the east edge at y = -990 m, so the
+        # closing edge is level with the road row at y = -1000 m
+        east = [(30000.0, v) for v in np.arange(-990.0, 0.0, 30.0)]
+        north = [(v, 0.0) for v in np.arange(30000.0, -30000.0, -30.0)]
+        west = [(-30000.0, v) for v in np.arange(0.0, -30000.0, -30.0)]
+        south = [(v, -30000.0) for v in np.arange(-30000.0, 30000.0, 40.0)]
+        back = [(30000.0, v) for v in np.arange(-30000.0, -990.0, 30.0)]
+        pts = east + north + west + south + back
+        pts.append(pts[0])
+        self.assertNotEqual((len(pts) - 1) % 3, 0)
+        k = 6371008.8
+        ring = [(lat0 + math.degrees(py / k),
+                 lon0 + math.degrees(px / (k * math.cos(math.radians(lat0)))))
+                for px, py in pts]
+        mask = np.array([abs(py) < 1 for _, py in pts])
+        bbox = (lat.min(), lon.min(), lat.max(), lon.max())
+        res = measure(lat, lon, g, ring, bbox, lat0, lon0, n_sources=60, seed=0,
+                      band_mask=mask, band=1000.0, dmin=300.0, dmax=1500.0,
+                      exclude=50.0)
+        self.assertIsNotNone(res)
+        inside = y < 0
+        want = inside[res["src"]] != inside[res["dst"]]
+        np.testing.assert_array_equal(res["cross"], want)
 
 
 if __name__ == "__main__":

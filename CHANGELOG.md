@@ -19,6 +19,17 @@ repository's documents are meant not to do.
   floor from 0.042 to 0.014. The true placement remained extremal: the highest
   of all 71 alternatives still falls below it.
 
+### Fixed
+
+- **Side assignment in `measure()`.** The ring was thinned for the parity test
+  with a plain `[::3]` slice, which drops the vertex that closes the ring
+  whenever its length minus one is not a multiple of three (every node level
+  with the missing edge then lands on the wrong side), and can drop the far
+  corners with which `cyprus.close_ring` closes the Nicosia line, leaving a
+  chord in their place. `thin_ring()` keeps the closing vertex and both ends
+  of every long edge. The committed result files were produced before this
+  fix and have not been regenerated.
+
 ### Notes
 
 - The headline finding reversed during development. Controlling for water and
