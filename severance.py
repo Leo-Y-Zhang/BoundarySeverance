@@ -51,6 +51,32 @@ def parity_inside(px, py, rx, ry):
     return inside
 
 
+def thin_ring(rx, ry, stride=3, max_edge=EXCLUDE / 3):
+    """Keep every `stride`-th vertex of a closed ring, for a faster parity test.
+
+    Dropping vertices is harmless only where they are close together, so a
+    vertex is always kept if either edge meeting it is longer than `max_edge`,
+    and the last vertex is always kept so the ring stays closed. Every run of
+    dropped vertices then spans at most stride * max_edge (EXCLUDE) of ring,
+    and the chord replacing it stays within EXCLUDE / 2 of the original line.
+
+    Without this, a plain [::3] slice loses the closing vertex whenever
+    len(ring) - 1 is not a multiple of 3 (parity_inside does not wrap around,
+    so every node level with the missing edge flips side), and it can drop the
+    far corners with which cyprus.close_ring closes an open line, replacing
+    them with a chord through the city.
+    """
+    rx = np.asarray(rx, dtype=float)
+    ry = np.asarray(ry, dtype=float)
+    keep = np.zeros(len(rx), dtype=bool)
+    keep[::stride] = True
+    keep[-1] = True
+    long_edge = np.hypot(np.diff(rx), np.diff(ry)) > max_edge
+    keep[:-1] |= long_edge
+    keep[1:] |= long_edge
+    return rx[keep], ry[keep]
+
+
 def rotate(rx, ry, deg):
     if deg == 0:
         return rx, ry
@@ -98,9 +124,9 @@ def measure(lat, lon, g, ring_ll, study_bbox, lat0, lon0,
     if len(cand) < 500:
         return None
 
-    dec = slice(None, None, 3)  # decimate ring for the parity test
     inside = np.zeros(len(lat), dtype=bool)
-    inside[cand] = parity_inside(nx[cand], ny[cand], rx[dec], ry[dec])
+    tx, ty = thin_ring(rx, ry)
+    inside[cand] = parity_inside(nx[cand], ny[cand], tx, ty)
 
     src = rng.choice(cand, size=min(n_sources, len(cand)), replace=False)
 
