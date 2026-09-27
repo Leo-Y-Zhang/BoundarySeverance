@@ -1,0 +1,81 @@
+name: Rerun results
+
+# Regenerates every committed result file from a fresh Overpass download, for
+# review before anything is committed. Run by hand only: it downloads roughly
+# 130 MB from OpenStreetMap and takes hours. Nothing is pushed; the outputs are
+# uploaded as a workflow artifact, alongside the Overpass cache so the same
+# snapshot can be rerun offline. paper.pdf is not rebuilt (no tectonic here).
+
+on:
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  rerun:
+    runs-on: ubuntu-latest
+    timeout-minutes: 350
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[plot]"
+
+      - name: Fetch road networks
+        run: python fetch.py berlin hamburg nicosia
+
+      - name: Validate geometry
+        run: python validate_wall.py
+
+      - name: Experiments
+        run: |
+          set -e
+          for s in run_experiment.py run_controlled.py run_required.py \
+                   run_sensitivity.py run_sens_true.py run_master.py \
+                   run_finenull.py run_final.py run_cyprus.py \
+                   nicosia_ci.py localise.py facts.py; do
+            echo "::group::$s"
+            python "$s"
+            echo "::endgroup::"
+          done
+
+      - name: Figures, manuscript source and storymap
+        run: |
+          python figures.py
+          python make_paper.py
+          python make_storymap.py
+
+      - name: Changes against the committed files
+        if: always()
+        run: git diff --stat | tee rerun-diffstat.txt
+
+      - name: Upload regenerated files
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: regenerated-results
+          if-no-files-found: warn
+          path: |
+            results*.json
+            nicosia_ci.json
+            localised.json
+            facts.json
+            fig*.png
+            paper.tex
+            storymap.html
+            storymap.md
+            rerun-diffstat.txt
+
+      - name: Upload Overpass cache
+        if: always()
+        uses: actions/upload-artifact@v4
+        with:
+          name: overpass-cache
+          if-no-files-found: warn
+          path: cache/
