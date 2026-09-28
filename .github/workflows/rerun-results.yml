@@ -4,13 +4,18 @@ name: Rerun results
 # by hand only: it downloads roughly 130 MB from OpenStreetMap and the
 # experiments take hours, so each experiment script runs as its own job (a
 # single job exceeded the 6-hour limit). The regenerated files are pushed to a
-# new branch, claude/regenerated-results-<run id>, for review in a pull
+# new branch, claude/regenerated-results-<run id>-<attempt>, for review in a pull
 # request; nothing is pushed to main. paper.pdf is not rebuilt (no tectonic
 # here). The Overpass cache is uploaded as an artifact so the same snapshot can
 # be rerun offline.
 
 on:
   workflow_dispatch:
+    inputs:
+      scripts:
+        description: JSON list of experiment scripts to rerun (default all)
+        required: false
+        default: '["run_experiment.py", "run_controlled.py", "run_required.py", "run_sensitivity.py", "run_sens_true.py", "run_master.py", "run_finenull.py", "run_final.py", "run_cyprus.py", "nicosia_ci.py", "localise.py", "facts.py"]'
 
 permissions:
   contents: read
@@ -45,19 +50,7 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        script:
-          - run_experiment.py
-          - run_controlled.py
-          - run_required.py
-          - run_sensitivity.py
-          - run_sens_true.py
-          - run_master.py
-          - run_finenull.py
-          - run_final.py
-          - run_cyprus.py
-          - nicosia_ci.py
-          - localise.py
-          - facts.py
+        script: ${{ fromJSON(inputs.scripts) }}
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
@@ -122,7 +115,7 @@ jobs:
           python make_storymap.py || echo "::warning::make_storymap.py failed"
       - name: Push the regenerated files to a review branch
         env:
-          BRANCH: claude/regenerated-results-${{ github.run_id }}
+          BRANCH: claude/regenerated-results-${{ github.run_id }}-${{ github.run_attempt }}
         run: |
           git diff --stat
           git config user.name "github-actions[bot]"
