@@ -38,7 +38,7 @@ neighbourhood, on the same side?
 You will find excess circuity across the Wall. But you will also find
 it across an arbitrary line drawn anywhere awkward. Laying the same curve across
 Hamburg, a city never divided, produces apparent severance of up to
-1.51 -- purely from the Elbe and the port. A river severs a road
+1.58 -- purely from the Elbe and the port. A river severs a road
 network all by itself, with no politics involved at all.
 
 So the test cannot be "is there extra circuity?" It has to be "is there more
