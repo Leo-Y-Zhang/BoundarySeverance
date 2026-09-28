@@ -1,10 +1,13 @@
 name: Rerun results
 
-# Regenerates every committed result file from a fresh Overpass download, for
-# review before anything is committed. Run by hand only: it downloads roughly
-# 130 MB from OpenStreetMap and takes hours. Nothing is pushed; the outputs are
-# uploaded as a workflow artifact, alongside the Overpass cache so the same
-# snapshot can be rerun offline. paper.pdf is not rebuilt (no tectonic here).
+# Regenerates every committed result file from a fresh Overpass download. Run
+# by hand only: it downloads roughly 130 MB from OpenStreetMap and the
+# experiments take hours, so each experiment script runs as its own job (a
+# single job exceeded the 6-hour limit). The regenerated files are pushed to a
+# new branch, claude/regenerated-results-<run id>, for review in a pull
+# request; nothing is pushed to main. paper.pdf is not rebuilt (no tectonic
+# here). The Overpass cache is uploaded as an artifact so the same snapshot can
+# be rerun offline.
 
 on:
   workflow_dispatch:
@@ -13,69 +16,121 @@ permissions:
   contents: read
 
 jobs:
-  rerun:
+  fetch:
     runs-on: ubuntu-latest
-    timeout-minutes: 350
+    timeout-minutes: 60
     steps:
       - uses: actions/checkout@v4
       - uses: actions/setup-python@v5
         with:
           python-version: "3.13"
-
       - name: Install
         run: |
           python -m pip install --upgrade pip
           python -m pip install -e ".[plot]"
-
       - name: Fetch road networks
         run: python fetch.py berlin hamburg nicosia
-
       - name: Validate geometry
         run: python validate_wall.py
+      - name: Upload Overpass cache
+        uses: actions/upload-artifact@v4
+        with:
+          name: overpass-cache
+          path: cache/
 
-      - name: Experiments
+  experiment:
+    needs: fetch
+    runs-on: ubuntu-latest
+    timeout-minutes: 355
+    strategy:
+      fail-fast: false
+      matrix:
+        script:
+          - run_experiment.py
+          - run_controlled.py
+          - run_required.py
+          - run_sensitivity.py
+          - run_sens_true.py
+          - run_master.py
+          - run_finenull.py
+          - run_final.py
+          - run_cyprus.py
+          - nicosia_ci.py
+          - localise.py
+          - facts.py
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install
         run: |
-          set -e
-          for s in run_experiment.py run_controlled.py run_required.py \
-                   run_sensitivity.py run_sens_true.py run_master.py \
-                   run_finenull.py run_final.py run_cyprus.py \
-                   nicosia_ci.py localise.py facts.py; do
-            echo "::group::$s"
-            python "$s"
-            echo "::endgroup::"
-          done
-
-      - name: Figures, manuscript source and storymap
-        run: |
-          python figures.py
-          python make_paper.py
-          python make_storymap.py
-
-      - name: Changes against the committed files
-        if: always()
-        run: git diff --stat | tee rerun-diffstat.txt
-
-      - name: Upload regenerated files
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[plot]"
+      - uses: actions/download-artifact@v4
+        with:
+          name: overpass-cache
+          path: cache/
+      - name: Run ${{ matrix.script }}
+        env:
+          SCRIPT: ${{ matrix.script }}
+        run: python "$SCRIPT"
+      - name: Upload output
         if: always()
         uses: actions/upload-artifact@v4
         with:
-          name: regenerated-results
+          name: out-${{ strategy.job-index }}
           if-no-files-found: warn
           path: |
             results*.json
             nicosia_ci.json
             localised.json
             facts.json
-            fig*.png
-            paper.tex
-            storymap.html
-            storymap.md
-            rerun-diffstat.txt
 
-      - name: Upload Overpass cache
-        if: always()
-        uses: actions/upload-artifact@v4
+  assemble:
+    needs: experiment
+    if: always()
+    runs-on: ubuntu-latest
+    timeout-minutes: 60
+    permissions:
+      contents: write
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
         with:
-          name: overpass-cache
-          if-no-files-found: warn
-          path: cache/
+          python-version: "3.13"
+      - name: Install
+        run: |
+          python -m pip install --upgrade pip
+          python -m pip install -e ".[plot]"
+      - uses: actions/download-artifact@v4
+        with:
+          pattern: out-*
+          path: regenerated/
+      - name: Keep only files that a job regenerated
+        # Each job uploads every result file in its checkout, but only the one
+        # its own script wrote differs from the committed copy; copy those in.
+        run: |
+          for f in regenerated/*/*.json; do
+            name="$(basename "$f")"
+            if ! cmp -s "$f" "$name"; then cp "$f" "$name"; echo "updated $name"; fi
+          done
+      - name: Figures, manuscript source and storymap
+        run: |
+          python figures.py || echo "::warning::figures.py failed"
+          python make_paper.py || echo "::warning::make_paper.py failed"
+          python make_storymap.py || echo "::warning::make_storymap.py failed"
+      - name: Push the regenerated files to a review branch
+        env:
+          BRANCH: claude/regenerated-results-${{ github.run_id }}
+        run: |
+          git diff --stat
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$BRANCH"
+          git add results*.json nicosia_ci.json localised.json facts.json \
+                  fig*.png paper.tex storymap.html storymap.md
+          if git diff --cached --quiet; then echo "nothing changed"; exit 0; fi
+          git commit -m "Regenerate results with the corrected boundary thinning" \
+                     -m "Produced by the Rerun results workflow, run $GITHUB_RUN_ID, from a fresh Overpass download."
+          git push origin "$BRANCH"
