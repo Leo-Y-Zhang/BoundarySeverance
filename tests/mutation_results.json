@@ -1,0 +1,590 @@
+[
+  {
+    "module": "validate_wall.py",
+    "line": 53,
+    "mutation": "ignore an inside landmark failure",
+    "old": "0 if got else 1",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_rejects_one_landmark_on_wrong_side[WEST]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 60,
+    "mutation": "ignore an outside landmark failure",
+    "old": "0 if not got else 1",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_rejects_one_landmark_on_wrong_side[EAST]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 63,
+    "mutation": "skip area check",
+    "old": "400 <= area <= 560",
+    "new": "True",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_rejects_wrong_area[399.99]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 63,
+    "mutation": "reject lower area endpoint",
+    "old": "400 <= area <= 560",
+    "new": "400 < area <= 560",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_accepts_valid_ring_and_inclusive_area_limits[400]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 63,
+    "mutation": "reject upper area endpoint",
+    "old": "400 <= area <= 560",
+    "new": "400 <= area < 560",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_accepts_exact_area_limits[560]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 65,
+    "mutation": "do not count invalid area",
+    "old": "0 if area_ok else 1",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_rejects_wrong_area[399.99]"
+    ]
+  },
+  {
+    "module": "validate_wall.py",
+    "line": 68,
+    "mutation": "always return successful exit status",
+    "old": "1 if fails else 0",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_wall_rejects_wrong_area[399.99]"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 138,
+    "mutation": "ignore a north landmark failure",
+    "old": "0 if got else 1",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_divide_rejects_each_changed_landmark[LANDMARKS_NORTH-n1-point0]"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 143,
+    "mutation": "ignore a south landmark failure",
+    "old": "0 if not got else 1",
+    "new": "0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_divide_rejects_each_changed_landmark[LANDMARKS_SOUTH-s1-point2]"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 146,
+    "mutation": "accept every ring",
+    "old": "return fails == 0",
+    "new": "return fails >= 0",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_validation.py::test_divide_rejects_each_changed_landmark[LANDMARKS_NORTH-n1-point0]"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 42,
+    "mutation": "drop two-point geometry",
+    "old": "            if g and len(g) > 1:",
+    "new": "            if g and len(g) > 2:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_member_parsers_keep_two_points_and_skip_incomplete_members"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 84,
+    "mutation": "reverse the wrong chain endpoint",
+    "old": "if w == \"t\":",
+    "new": "if w != \"t\":",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_divide_chains_reversed_members_and_selects_longest"
+    ]
+  },
+  {
+    "module": "cyprus.py",
+    "line": 88,
+    "mutation": "choose shortest divide chain",
+    "old": "chains.sort(key=len, reverse=True)",
+    "new": "chains.sort(key=len, reverse=False)",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_divide_chains_reversed_members_and_selects_longest"
+    ]
+  },
+  {
+    "module": "graph.py",
+    "line": 58,
+    "mutation": "drop distinct-node edges",
+    "old": "if prev is not None and prev != cur:",
+    "new": "if prev is not None and prev == cur:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_graph_weights_components_and_missing_node_breaks"
+    ]
+  },
+  {
+    "module": "graph.py",
+    "line": 55,
+    "mutation": "bridge a missing road node",
+    "old": "                prev = None\n                continue",
+    "new": "                continue",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_graph_weights_components_and_missing_node_breaks"
+    ]
+  },
+  {
+    "module": "graph.py",
+    "line": 62,
+    "mutation": "lose reverse edges and double forward weights",
+    "old": "rows.append(cur); cols.append(prev); w.append(d)",
+    "new": "rows.append(prev); cols.append(cur); w.append(d)",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_graph_weights_components_and_missing_node_breaks"
+    ]
+  },
+  {
+    "module": "graph.py",
+    "line": 69,
+    "mutation": "keep smaller components",
+    "old": "labels == sizes.argmax()",
+    "new": "labels != sizes.argmax()",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_graph_weights_components_and_missing_node_breaks"
+    ]
+  },
+  {
+    "module": "graph.py",
+    "line": 60,
+    "mutation": "discard positive road lengths",
+    "old": "if d > 0:",
+    "new": "if d < 0:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_graph_weights_components_and_missing_node_breaks"
+    ]
+  },
+  {
+    "module": "osm.py",
+    "line": 30,
+    "mutation": "ignore cached response",
+    "old": "if os.path.exists(path):",
+    "new": "if not os.path.exists(path):",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_cache_parses_exact_query_and_tag[]"
+    ]
+  },
+  {
+    "module": "osm.py",
+    "line": 32,
+    "mutation": "accept cache without parsing JSON",
+    "old": "return json.load(fh)",
+    "new": "return {}",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_cache_parses_exact_query_and_tag[]"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 88,
+    "mutation": "keep only alternative route",
+    "old": "m[\"role\"] != \"alternative\"",
+    "new": "m[\"role\"] == \"alternative\"",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_build_ring_filters_alternatives_and_closes_gap"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 95,
+    "mutation": "leave open ring unclosed",
+    "old": "if gap > 1.0:",
+    "new": "if gap < 1.0:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_build_ring_filters_alternatives_and_closes_gap"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 26,
+    "mutation": "drop valid two-point member",
+    "old": "if not g or len(g) < 2:",
+    "new": "if not g or len(g) <= 2:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_member_parsers_keep_two_points_and_skip_incomplete_members"
+    ]
+  },
+  {
+    "module": "segments.py",
+    "line": 52,
+    "mutation": "invert inner versus outer classification",
+    "old": "inner = d > tol",
+    "new": "inner = d < tol",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_inputs.py::test_classify_inner_and_outer_at_tolerance"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 167,
+    "mutation": "invert circuity",
+    "old": "net[hits] / cr",
+    "new": "cr / net[hits]",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_routes_distances_counts_and_ratio"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 180,
+    "mutation": "invert severance ratio",
+    "old": "np.median(a) / np.median(b)",
+    "new": "np.median(b) / np.median(a)",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_ratio_for_a_boundary_with_real_route_cost"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 160,
+    "mutation": "retain forbidden barrier crossings",
+    "old": "alive &= ~b.crosses",
+    "new": "alive &= b.crosses",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_enforces_each_barrier_control[barriers]"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 162,
+    "mutation": "discard required barrier crossings",
+    "old": "alive &= b.crosses",
+    "new": "alive &= ~b.crosses",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_enforces_each_barrier_control[require]"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 153,
+    "mutation": "skip a lone barrier control",
+    "old": "if barriers or require:",
+    "new": "if barriers and require:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_enforces_each_barrier_control[barriers]"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 140,
+    "mutation": "include unreachable trips",
+    "old": "(crow >= dmin) & (crow <= dmax) & np.isfinite(net[cand])",
+    "new": "(crow >= dmin) & (crow <= dmax)",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_discards_unreachable_destinations"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 147,
+    "mutation": "keep midpoints outside boundary band",
+    "old": "keep = dmid <= band",
+    "new": "keep = dmid >= band",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestMeasureSides::test_closed_ring_keeps_its_closing_edge"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 171,
+    "mutation": "accept insufficient total pairs",
+    "old": "if len(rows) < 200:",
+    "new": "if len(rows) < 0:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_rejects_too_few_total_pairs"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 177,
+    "mutation": "accept insufficient pairs on one side",
+    "old": "if len(a) < 50 or len(b) < 50:",
+    "new": "if len(a) < 50 and len(b) < 50:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_measure_rejects_too_few_crossing_pairs"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 208,
+    "mutation": "multiply bootstrap medians",
+    "old": "np.median(rng.choice(a, len(a))) /",
+    "new": "np.median(rng.choice(a, len(a))) *",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_pair_bootstrap_known_resamples"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 225,
+    "mutation": "resample all other source clusters",
+    "old": "src == s",
+    "new": "src != s",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_cluster_bootstrap_whole_sources_repeats_and_small_class_guard"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 231,
+    "mutation": "retain undersized bootstrap class",
+    "old": "if x.sum() < 20 or (~x).sum() < 20:",
+    "new": "if x.sum() < 20 and (~x).sum() < 20:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_severance.py::test_cluster_bootstrap_whole_sources_repeats_and_small_class_guard"
+    ]
+  },
+  {
+    "module": "make_paper.py",
+    "line": 179,
+    "mutation": "silently omit missing template value",
+    "old": "raise KeyError(f\"template needs '{k}' but it was not computed\")",
+    "new": "return \"\"",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_paper_validation.py::test_manuscript_rejects_missing_template_value"
+    ]
+  },
+  {
+    "module": "make_paper.py",
+    "line": 185,
+    "mutation": "allow unfilled placeholders",
+    "old": "if leftover:",
+    "new": "if False:",
+    "killed_before": false,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_paper_validation.py::test_manuscript_rejects_malformed_placeholder"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 87,
+    "mutation": "rotate: sign flip breaks the rotation matrix",
+    "old": "return cx + c * dx - s * dy, cy + s * dx + c * dy",
+    "new": "return cx + c * dx + s * dy, cy + s * dx + c * dy",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestRotate::test_rotation_preserves_distance_from_centroid"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 50,
+    "mutation": "parity: OR instead of XOR, so concave shapes break",
+    "old": "inside ^= cond & (px < xint)",
+    "new": "inside |= cond & (px < xint)",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestParityInside::test_matches_scalar_implementation"
+    ]
+  },
+  {
+    "module": "osm.py",
+    "line": 65,
+    "mutation": "haversine: drop the arcsine",
+    "old": "return 2 * R_EARTH * math.asin(math.sqrt(a))",
+    "new": "return 2 * R_EARTH * math.sqrt(a)",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestHaversine::test_antipodal_is_half_the_circumference"
+    ]
+  },
+  {
+    "module": "osm.py",
+    "line": 74,
+    "mutation": "projection: forget the latitude compression",
+    "old": "x = math.radians(lon - lon0) * R_EARTH * math.cos(math.radians(lat0))",
+    "new": "x = math.radians(lon - lon0) * R_EARTH",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestProjection::test_agrees_with_haversine_at_city_scale"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 124,
+    "mutation": "ring area: drop abs, so orientation changes the sign",
+    "old": "return abs(s) / 2.0 / 1e6",
+    "new": "return s / 2.0 / 1e6",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestRingArea::test_area_is_orientation_independent"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 111,
+    "mutation": "point_in_ring: never toggle, so everything reads outside",
+    "old": "if x < xint:\n                inside = not inside",
+    "new": "if x < xint:\n                inside = inside",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestPointInRing::test_centre_of_square_is_inside"
+    ]
+  },
+  {
+    "module": "barriers.py",
+    "line": 112,
+    "mutation": "barrier grid: never report a crossing",
+    "old": "return hit.any(axis=1)",
+    "new": "return np.zeros(len(xa), dtype=bool)",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestBarrierGrid::test_multi_crossing_parity_is_not_or"
+    ]
+  },
+  {
+    "module": "barriers.py",
+    "line": 93,
+    "mutation": "barrier grid: stop trimming ends, so quayside roads count as crossings",
+    "old": "def crosses(self, xa, ya, xb, yb, skip_ends=60.0):",
+    "new": "def crosses(self, xa, ya, xb, yb, skip_ends=0.0):",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestBarrierGrid::test_road_running_alongside_the_barrier_is_not_a_crossing"
+    ]
+  },
+  {
+    "module": "wall.py",
+    "line": 37,
+    "mutation": "chain: mislabel a head as a tail",
+    "old": "ends.setdefault(a, []).append((i, \"head\"))",
+    "new": "ends.setdefault(a, []).append((i, \"tail\"))",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestChain::test_assembles_ordered_segments"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 73,
+    "mutation": "thin_ring: let the stride drop the vertex that closes the ring",
+    "old": "    keep[-1] = True\n",
+    "new": "",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestMeasureSides::test_closed_ring_keeps_its_closing_edge"
+    ]
+  },
+  {
+    "module": "severance.py",
+    "line": 75,
+    "mutation": "thin_ring: drop far closure corners, leaving a chord through the city",
+    "old": "    keep[:-1] |= long_edge\n    keep[1:] |= long_edge\n",
+    "new": "",
+    "killed_before": true,
+    "killed_after": true,
+    "killed_by": [
+      "tests/test_geometry.py::TestMeasureSides::test_open_line_closed_into_a_ring"
+    ]
+  }
+]
